@@ -111,13 +111,13 @@ def RA_unit(x, h, w, n):
     x_2 = tf.zeros([1, h, w, 0], tf.float32)
     x_t_small = tf.zeros([1, x_1.shape[1].value, w/2, 0], tf.float32)
     for k in range(n):
-	x_t_1 = tf.slice(x_1, [0,k,0,0], [1,1,w/2,x.shape[3].value])
-	x_t_2 = tf.image.resize_images(x_t_1, [h,w], 1)
+        x_t_1 = tf.slice(x_1, [0,k,0,0], [1,1,w/2,x.shape[3].value])
+        x_t_2 = tf.image.resize_images(x_t_1, [h,w], 1)
         x_2 = tf.concat([x_2, x_t_2], axis=3)
-	x_t_3 = tf.abs(x - x_t_2)
-    	x_t = tf.concat([x_t, x_t_3], axis=3)
-    x_out = tf.concat([x, x_t], axis=3)
-    return x_out , x_2
+        x_t_3 = tf.abs(x - x_t_2)
+        x_t = tf.concat([x_t, x_t_3], axis=3)
+        x_out = tf.concat([x, x_t], axis=3)
+        return x_out , x_2
 
 def local_global_salience_unit(x, h, w):
     l_1 = tf.nn.avg_pool(x, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
