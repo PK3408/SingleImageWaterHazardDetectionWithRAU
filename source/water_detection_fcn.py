@@ -51,19 +51,16 @@ def load_data(p, step):
         for c in range(gt_img.shape[1]):
             if gt_img[r,c] == 1:
                     gt_img[r,c] = 1
-            else:
-		            gt_img[r,c] = 0
-                    gt_imgs.append(gt_img)
-
-    gt_img2 = io.imread(fp_gt)
-    gt_img2 = transform.resize(gt_img2, (IMAGE_SIZE_HEIGHT, IMAGE_SIZE_WIDTH))
+            else: gt_img[r,c] = 0 ,gt_imgs.append(gt_img)
+                        
+    gt_img2 = io.imread(fp_gt) ,gt_img2 = transform.resize(gt_img2, (IMAGE_SIZE_HEIGHT, IMAGE_SIZE_WIDTH))               
     for r in range(gt_img2.shape[0]):
             for c in range(gt_img2.shape[1]):
                 if gt_img2[r,c] == 1:
                     gt_img2[r,c] = 0
                 else:
                     gt_img2[r,c] = 1
-                    gt_imgs2.append(gt_img2)
+                    gt_imgs2.append(gt_img2)        
 
     return np.asarray(imgs,np.float32), np.asarray(gt_imgs,np.int32), np.asarray(gt_imgs2, np.int32)
 
@@ -297,7 +294,7 @@ def main(argv=None):
 
     if FLAGS.mode == "train":
         print("Loading data")
-    global p;
+    global p
     p = load_training_dataset_path()
     	#train_imgs, gt_imgs = load_data(FLAGS.data_dir)
     	#gt_imgs = np.expand_dims(gt_imgs, axis=3)
@@ -317,17 +314,12 @@ def main(argv=None):
             sess.run(train_op, feed_dict = feed_dict)
             dur = time.time() - start_time
             print("dur : %f"% dur)
-    if itr % 1 == 0:
-		    train_loss = sess.run(loss, feed_dict = feed_dict)
-            print('KITTI Step: %d, Train_loss:%g'%(itr, train_loss))
+    if itr % 1 == 0:train_loss = sess.run(loss, feed_dict = feed_dict),print('KITTI Step: %d, Train_loss:%g'%(itr, train_loss))
 	    #if itr % 100 == 0:
             #    summary = sess.run(merged, feed_dict = feed_dict)
             #    summary_writer.add_summary(summary, itr)
-    if itr % 5000 == 0:
-	    print('Save Net Model...')
-	    saver.save(sess, FLAGS.logs_dir + "model.ckpt", itr)
-    if itr % 5000 == 0 and itr >= 20000:
-	    	FLAGS.learning_rate = FLAGS.learning_rate / 2
+    if itr % 5000 == 0:print('Save Net Model...'),saver.save(sess, FLAGS.logs_dir + "model.ckpt", itr)
+    if itr % 5000 == 0 and itr >= 20000: FLAGS.learning_rate = FLAGS.learning_rate / 2
 
     elif FLAGS.mode == "visualize":
         p = np.genfromtxt('../Dataset/on_road_test.txt', dtype='str')
