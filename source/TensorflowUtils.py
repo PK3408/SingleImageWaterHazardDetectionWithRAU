@@ -1,3 +1,4 @@
+from functools import reduce
 import tensorflow as tf
 import numpy as np
 import scipy.misc as misc
@@ -6,7 +7,7 @@ from six.moves import urllib
 import tarfile
 import zipfile
 import scipy.io
-from tensorflow.contrib import rnn
+from tensorflow.keras.layers import RNN
 
 from tensorflow.python.ops import array_ops
 
@@ -90,8 +91,8 @@ def conv2d_transpose_strided(x, W, b, output_shape=None, stride = 2, stride_y = 
     return tf.nn.bias_add(conv, b)
 
 def rnn_lstm(x, W, b, num_hidden):
-    lstm_cell = rnn.BasicLSTMCell(num_hidden, forget_bias=1.0)
-    output, states = rnn.static_rnn(lstm_cell, x, dtype=tf.float32)
+    lstm_cell = RNN.BasicLSTMCell(num_hidden, forget_bias=1.0)
+    output, states = RNN.static_rnn(lstm_cell, x, dtype=tf.float32)
     rnn_res = x * W + b
     return rnn_res
 
