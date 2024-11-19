@@ -11,15 +11,15 @@ import glob
 import os
 import time
 
-FLAGS = tf.flags.FLAGS
-tf.flags.DEFINE_integer("batch_size", "1", "batch size for training")
-tf.flags.DEFINE_string("logs_dir", "models/", "path to logs directory")
-tf.flags.DEFINE_string("data_dir", "/home/Water_Detection", "path to dataset")
-tf.flags.DEFINE_string("output_dir", "results/", "path of output")
-tf.flags.DEFINE_float("learning_rate", "1e-6", "Learning rate for Adam Optimizer")
-tf.flags.DEFINE_string("model_dir", "Model_zoo/", "Path to vgg model mat")
-tf.flags.DEFINE_bool('debug', "False", "Debug mode: True/ False")
-tf.flags.DEFINE_string('mode', "train", "Mode train/ test/ visualize")
+FLAGS = tf.compat.v1.flags.FLAGS
+tf.compat.v1.flags.DEFINE_integer("batch_size", "1", "batch size for training")
+tf.compat.v1.flags.DEFINE_string("logs_dir", "models/", "path to logs directory")
+tf.compat.v1.flags.DEFINE_string("data_dir", "/home/Water_Detection", "path to dataset")
+tf.compat.v1.flags.DEFINE_string("output_dir", "results/", "path of output")
+tf.compat.v1.flags.DEFINE_float("learning_rate", "1e-6", "Learning rate for Adam Optimizer")
+tf.compat.v1.flags.DEFINE_string("model_dir", "Model_zoo/", "Path to vgg model mat")
+tf.compat.v1.flags.DEFINE_bool('debug', "False", "Debug mode: True/ False")
+tf.compat.v1.flags.DEFINE_string('mode', "train", "Mode train/ test/ visualize") 
 
 MAX_ITERATION = int(1e5 + 1)
 NUM_OF_CLASSESS = 2
@@ -53,7 +53,8 @@ def load_data(p, step):
                     gt_img[r,c] = 1
             else: gt_img[r,c] = 0 ,gt_imgs.append(gt_img)
                         
-    gt_img2 = io.imread(fp_gt) ,gt_img2 = transform.resize(gt_img2, (IMAGE_SIZE_HEIGHT, IMAGE_SIZE_WIDTH))               
+    gt_img2 = io.imread(fp_gt)
+    gt_img2 = transform.resize(gt_img2, (IMAGE_SIZE_HEIGHT, IMAGE_SIZE_WIDTH))               
     for r in range(gt_img2.shape[0]):
             for c in range(gt_img2.shape[1]):
                 if gt_img2[r,c] == 1:

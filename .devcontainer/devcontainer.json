@@ -1,0 +1,33 @@
+{
+
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"image": "mcr.microsoft.com/devcontainers/universal:2",
+	"features": {
+		"ghcr.io/devcontainers/features/nvidia-cuda:1": {
+			"installCudnn": true,
+			"installCudnnDev": true,
+			"installNvtx": true,
+			"installToolkit": true,
+			"cudaVersion": "12.5",
+			"cudnnVersion": "8.9.5.29"
+		}
+	},
+	
+		"name": "python dev",
+		"image": "python:3.7",
+		"customizations":{
+			"vscode": {
+				"extensions":[
+					"ms-python.python",
+					"ms-python.vscode-pylance"
+				],
+				"settings": {
+					"python.defaultInterpreterPath": "/usr/local/bin/python"
+				}
+			}
+		}
+	}
